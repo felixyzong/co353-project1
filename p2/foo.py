@@ -37,8 +37,8 @@ if __name__ == '__main__':
     first_line = sys.stdin.readline().strip()
     n, k = map(int, first_line.split())
 
-    print('Number of vertices (n):', n)
-    print('Edges of subtree (k):', k)
+    #print('Number of vertices (n):', n)
+    #print('Edges of subtree (k):', k)
 
     cost_one_matrix = [[False for _ in range(n)] for _ in range(n)]
 
@@ -64,6 +64,6 @@ if __name__ == '__main__':
             total_cost += cost_one_subtrees[i]
             k -= cost_one_subtrees[i]-1
     
-    print('Total cost:', total_cost)
-
+    #print('Total cost:', total_cost)
+    print(total_cost)
         
