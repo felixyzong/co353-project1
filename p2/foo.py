@@ -33,8 +33,8 @@ def find_one_component_vertices(cost_one_matrix, vertices_reached, u, v):
         find_one_component_vertices(cost_one_matrix, vertices_reached, m, v)
 
 
-# calculate_one_subtrees(cost_one_matrix) calculates a list of number of vertices of each non-singleton-vertex
-#           component of a subgraph of G that only contains the cost 1 edges
+# calculate_one_subtrees(cost_one_matrix) calculates a list of number of edges of a subtree of 
+#           each non-singleton-vertex component of a subgraph of G that only contains cost 1 edges
 # requires:
 #           cost_one_matrix: n*n matrix of boolean value
 def calculate_one_subtrees(cost_one_matrix):
@@ -45,7 +45,8 @@ def calculate_one_subtrees(cost_one_matrix):
             if cost_one_matrix[i][j] == True:
                 vertices_reached = [0 for _ in range(len(cost_one_matrix))]
                 find_one_component_vertices(cost_one_matrix, vertices_reached, i, j)
-                cost_one_subtrees.append(sum(vertices_reached))
+                # the minus one calculates the number of edges but not the number of vertices
+                cost_one_subtrees.append(sum(vertices_reached) - 1)
 
     return cost_one_subtrees
 
@@ -70,14 +71,19 @@ if __name__ == '__main__':
 
     total_cost = 0
     for i in range(len(cost_one_subtrees)):
-        if (cost_one_subtrees[i] > k):
+        if cost_one_subtrees[i] >= k:
             # if the largest subtree could cover k
-            total_cost += k
+            total_cost = total_cost + k
+            k = 0
             break
         else:
             # otherwise will need one cost 2 edge to connect the largest subtree to the second largest one
-            total_cost += cost_one_subtrees[i]
-            k -= cost_one_subtrees[i]-1
+            total_cost = total_cost + cost_one_subtrees[i] + 2
+            k = k - cost_one_subtrees[i] - 1
     
+    # if still cannot cover k edges
+    if k > 0:
+        total_cost = total_cost + 2*k
+
     print(total_cost)
         
