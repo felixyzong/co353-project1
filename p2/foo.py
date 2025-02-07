@@ -57,7 +57,7 @@ if __name__ == '__main__':
     cost_one_matrix = [[False for _ in range(n)] for _ in range(n)]
 
     # setting up matrix entries
-    for _ in range(n^2):
+    for _ in range(n*(n-1)//2):
         line = sys.stdin.readline().strip()
         u, v, c = map(int, line.split())
         if c == 1:
